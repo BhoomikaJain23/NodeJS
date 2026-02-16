@@ -1,0 +1,20 @@
+{
+  "name": "node-js",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/BhoomikaJain23/NodeJS#readme",
+  "bugs": {
+    "url": "https://github.com/BhoomikaJain23/NodeJS/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BhoomikaJain23/NodeJS.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
