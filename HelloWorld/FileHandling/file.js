@@ -1,5 +1,10 @@
 const fs = require("fs");
 
+//it will the minimum thread size of the system
+const os= require("os");
+console.log(os.cpus().length);
+
+
 // write in file
 
 //synchronous call || blocking request
