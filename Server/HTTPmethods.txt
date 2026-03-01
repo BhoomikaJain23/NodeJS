@@ -1,0 +1,16 @@
+HTTP methods:
+
+1. HTTP GET:
+   when you want to get some data from the server
+
+2. HTTP POST:
+   when you want to send and mutate some data in server
+
+3. HTTP PUT:
+   when you want to uplead a file or video 
+
+4. HTTP PATCH:
+   when u want to change a existing entry
+
+5. HTTP DELETE:
+   when u want to delete something like if u want to delte your account        
