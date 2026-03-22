@@ -6,7 +6,8 @@ const app = express();
 const PORT = 8000;
 
 //middleware -plugin
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({extended:false}));
+app.use(express.json());
 
 //Routes
 
@@ -30,13 +31,33 @@ app.route("/api/users/:id")
   const user = users.find((user)=>user.id ==id);
      return res.json(user);
 })
-.patch((req,res)=>{
-    //TODO: EDIT THE USER WITH ID
-    return res.json({status:"pending"});
+.patch((req, res) => {
+    const id = Number(req.params.id);
+
+    const user = users.find(u => u.id === id);
+
+    if (!user) {
+        return res.json({ message: "User not found" });
+    }
+
+    user.first_name = req.body.first_name || user.first_name;
+    user.last_name = req.body.last_name || user.last_name;
+    user.email = req.body.email || user.email;
+    user.gender = req.body.gender || user.gender;
+    user.job_title = req.body.job_title || user.job_title;
+
+    fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), () => {
+        res.json({ status: "updated", user });
+    });
 })
-.delete((req,res)=>{
-      //TODO: DELETE THE USER WITH ID
-    return res.json({status:"pending"});
+.delete((req, res) => {
+    const id = Number(req.params.id);
+
+    const newUsers = users.filter(u => u.id !== id);
+
+    fs.writeFile('./MOCK_DATA.json', JSON.stringify(newUsers), () => {
+        res.json({ status: "deleted" });
+    });
 })
 
 // app.get("/api/users/:id",(req,res)=>{
