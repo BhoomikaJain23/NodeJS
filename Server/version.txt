@@ -1,0 +1,18 @@
+//version
+
+^5.2.1
+
+1st part->5
+2nd part-> 2
+3rd part->1
+
+//3rd Part(Last Part)-minor fixes (optional update)
+
+//2nd Part - Recommended Bug fix(Security fix)
+
+//1st part -Major Release - Major/Breaking update
+
+//^5.2.1 -> isme ^ iska mtlb ye hai ki hum 5.2.1 -> < 6.0.0 tlk install kr skte hai  
+// ^ - install all recommended and minor fixes automatically
+
+// ~5.2.1 -> only install minor fixes
