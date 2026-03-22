@@ -1,8 +1,12 @@
 const express = require('express');
+const fs = require('fs');
 const users= require('./MOCK_DATA.json');
 
 const app = express();
 const PORT = 8000;
+
+//middleware -plugin
+app.use(express.urlencoded({extended:false}))
 
 //Routes
 
@@ -22,8 +26,9 @@ app.get('/api/users',(req,res)=>{
 
 app.route("/api/users/:id")
 .get((req,res)=>{
-    //TODO:CREATE NEW USER
-    return res.json({status:"pending"});
+    const id =Number( req.params.id);
+  const user = users.find((user)=>user.id ==id);
+     return res.json(user);
 })
 .patch((req,res)=>{
     //TODO: EDIT THE USER WITH ID
@@ -41,8 +46,11 @@ app.route("/api/users/:id")
 // })
 
 app.post('/api/users',(req,res)=>{
-    //TODO:CREATE NEW USER
-    return res.json({status:"pending"});
+   const body =req.body;
+   users.push({...body,id: users.length+1});
+   fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
+    return res.json({status:"success",id: users.length});
+   })
 })
 
 // app.patch("/api/users/:id",(req,res)=>{
