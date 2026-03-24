@@ -93,8 +93,11 @@ app.route("/api/users/:id")
 app.post('/api/users',(req,res)=>{
    const body =req.body;
    users.push({...body,id: users.length+1});
+   if(!body.first_name || !body.last_name || !body.email || !body ||!body.gender || !body.job_title){
+    return res.status(400).json({status:"failure",message:"All fields are required"});
+   }
    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
-    return res.json({status:"success",id: users.length});
+    return res.status(201).json({status:"success",id: users.length});
    })
 })
 

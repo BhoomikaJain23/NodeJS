@@ -6,3 +6,7 @@
 1774366444857: ::1: GET: /api/users/1000
 1774368012734: ::1: GET: /api/users/1000
 1774368034818: ::1: GET: /api/users
+1774369679418: ::1: POST: /api/users/
+1774369746860: ::1: POST: /api/users/
+1774369806010: ::1: POST: /api/users/
+1774369844487: ::1: GET: /api/users
