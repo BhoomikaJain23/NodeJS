@@ -44,7 +44,7 @@ app.get('/users',(req,res)=>{
 //REST API
 app.get('/api/users',(req,res)=>{
     // console.log(req.myUserName);  // we can make changes in in request in middleware and can access them here also
-    
+    res.setHeader("X-MyName","BhoomikaJain"); // custom header
     return res.json(users);  
 })
 
@@ -54,6 +54,7 @@ app.route("/api/users/:id")
   const user = users.find((user)=>user.id ==id);
      return res.json(user);
 })
+
 .patch((req, res) => {
     const id = Number(req.params.id);
 
