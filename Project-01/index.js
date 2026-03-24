@@ -9,6 +9,27 @@ const PORT = 8000;
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
+//middleware -custom
+
+app.use((req,res,next)=>{
+    fs.appendFile("log.txt",`\n${Date.now()}: ${req.ip}: ${req.method}: ${req.path}`,(err,data)=>{
+    next()
+})
+})
+// app.use((req,res,next)=>{
+//  console.log("This is middleware 1");
+//  return res.json({message:"This is middleware 1"});
+// req.myUserName ="BhoomikaJain";
+// next();
+// })
+
+// app.use((req,res,next)=>{
+    // console.log("This is middleware 2",req.myUserName);
+//     console.log("This is middleware 2");
+//     next();
+// });
+
+
 //Routes
 
 app.get('/users',(req,res)=>{
@@ -22,7 +43,9 @@ app.get('/users',(req,res)=>{
 
 //REST API
 app.get('/api/users',(req,res)=>{
-    return res.json(users);
+    // console.log(req.myUserName);  // we can make changes in in request in middleware and can access them here also
+    
+    return res.json(users);  
 })
 
 app.route("/api/users/:id")
