@@ -31,3 +31,4 @@
 1774460663630: ::1: GET: /api/users
 1774461228399: ::1: PATCH: /api/users/69c41b9d361c9e3f36eb9ddc
 1774461238692: ::1: PATCH: /api/users/:69c41b9d361c9e3f36eb9ddc
+1774461588215: ::1: PATCH: /api/users/69c41b9d361c9e3f36eb9ddc

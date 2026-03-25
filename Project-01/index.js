@@ -99,34 +99,37 @@ app.route("/api/users/:id")
 })
 
 .patch(async (req, res) => {
-    const id = Number(req.params.id);
- //before connecting to DB
-    // const user = users.find(u => u.id === id);
- //after connecting to DB
-  await User.findByIdAndUpdate(req.params.id, {lastname:"changed"});   
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
 
-    if (!allDBUsers) {
-        return res.json({ message: "User not found" });
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.json({ status: "updated", user: updatedUser });
+
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
     }
-
-    allDBUsers.first_name = req.body.first_name || allDBUsers.first_name;
-    allDBUsers.last_name = req.body.last_name || allDBUsers.last_name;
-    allDBUsers.email = req.body.email || allDBUsers.email;
-    allDBUsers.gender = req.body.gender || allDBUsers.gender;
-    allDBUsers.job_title = req.body.job_title || allDBUsers.job_title;
-
-    fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), () => {
-        res.json({ status: "updated", user });
-    });
 })
-.delete((req, res) => {
-    const id = Number(req.params.id);
 
-    const newUsers = users.filter(u => u.id !== id);
+.delete(async (req, res) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
 
-    fs.writeFile('./MOCK_DATA.json', JSON.stringify(newUsers), () => {
-        res.json({ status: "deleted" });
-    });
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.json({ status: "deleted" });
+
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
 })
 
 // app.get("/api/users/:id",(req,res)=>{
@@ -135,27 +138,23 @@ app.route("/api/users/:id")
 //     return res.json(user);
 // })
 
-app.post('/api/users',async (req,res)=>{
-   const body =req.body;
-   users.push({...body,id: users.length+1});
-   if(!body.first_name || !body.last_name || !body.email || !body ||!body.gender || !body.job_title){
+app.post('/api/users', async (req, res) => {
+   const body = req.body;
+
+   if(!body.first_name || !body.last_name || !body.email || !body.gender || !body.job_title){
     return res.status(400).json({status:"failure",message:"All fields are required"});
    }
-   const result = await User.create({
-    first_name: body.first_name,
-    last_name: body.last_name,
-    email: body.email,
-    gender: body.gender,
-    job_title: body.job_title
+
+   const result = await User.create(body);
+
+   return res.status(201).json({
+       status: "success",
+       id: result._id
    });
-   console.log("result:",result);
-   
-   return res.status(201).json({status:"success",id: result._id
-   })
+});
 //    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
 //     return res.status(201).json({status:"success",id: users.length});
 //    })
-})
 
 // app.patch("/api/users/:id",(req,res)=>{
 //     //TODO: EDIT THE USER WITH ID
